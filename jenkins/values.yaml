@@ -1,0 +1,50 @@
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: ""
+
+jenkins:
+  service:
+    type: NodePort
+    port: 8080
+    nodePort: 30080
+  persistence:
+    enabled: true
+    storageClass: "local-path"
+    size: 8Gi
+    accessMode: ReadWriteOnce
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 500m
+    limits:
+      memory: 2Gi
+      cpu: 1000m
+  serviceAccount:
+    create: true
+    annotations: {}
+  rbac:
+    create: true
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
+  nodeSelector:
+    jenkins: "true"
+
+
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "jenkins-postgres-password"
+    database: "jenkins"
+  primary:
+    persistence:
+      enabled: true
+      storageClass: "local-path"
+      size: 8Gi
+      accessMode: ReadWriteOnce
+    nodeSelector:
+      jenkins: "true"
+  service:
+    type: ClusterIP
+  podAnnotations:
+    sidecar.istio.io/inject: "false"

@@ -1,0 +1,10 @@
+apiVersion: v2
+name: jenkins
+description: Jenkins Helm Chart
+type: application
+version: 0.1.0
+appVersion: "13.2.0"
+dependencies:
+  - name: jenkins
+    version: 13.2.0
+    repository: https://charts.bitnami.com/bitnami 
